@@ -2,25 +2,34 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Date Card</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+html,body{
+    margin:0;
+    padding:0;
+    background:#ddd;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+img{
+    width:400px;
+    height:300px;
+    max-width:100vw;
+    height:auto;
+    image-rendering:crisp-edges;
+    background:#fff;
+}
+</style>
 </head>
 
 <body>
 
-<div id="card">
-
-    <div class="left">
-        <img src="qr.png" alt="QR Code">
-    </div>
-
-    <div class="right">
-        <div id="today" class="date"></div>
-        <div id="future" class="date"></div>
-    </div>
-
-</div>
+<img id="result" alt="Generated Image">
 
 <script src="script.js"></script>
 
