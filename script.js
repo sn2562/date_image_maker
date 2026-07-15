@@ -25,48 +25,34 @@ function futureString(d){
 
 }
 
-function generate(){
+function generate() {
 
-    const canvas=document.createElement("canvas");
+    const canvas = document.createElement("canvas");
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
 
-    canvas.width=WIDTH;
-    canvas.height=HEIGHT;
+    const c = canvas.getContext("2d");
 
-    const c=canvas.getContext("2d");
+    // 背景
+    c.fillStyle = "#fff";
+    c.fillRect(0, 0, WIDTH, HEIGHT);
 
-    c.fillStyle="white";
-    c.fillRect(0,0,WIDTH,HEIGHT);
+    // QR
+    c.drawImage(qr, 20, 90, 120, 120);
 
-    c.drawImage(qr,20,90,120,120);
+    // 日付
+    const now = new Date();
+    const next = new Date(now);
+    next.setDate(next.getDate() + 3);
 
-    const now=new Date();
+    c.fillStyle = "#000";
+    c.textBaseline = "middle";
+    c.font = "bold 34px sans-serif";
 
-    const next=new Date(now);
+    c.fillText(todayString(now), 165, 130);
+    c.fillText(futureString(next), 165, 190);
 
-    next.setDate(next.getDate()+3);
-
-    c.fillStyle="#000";
-
-    c.font="bold 34px sans-serif";
-
-    c.fillText(todayString(now),170,140);
-
-    c.fillText(futureString(next),170,200);
-
-    canvas.toBlob(blob=>{
-
-        const url=URL.createObjectURL(blob);
-
-        const img=document.getElementById("image");
-
-        img.src=url;
-
-        // 画像だけを表示する
-        img.onload=()=>{
-            document.body.innerHTML="";
-            document.body.appendChild(img);
-        };
-
-    },"image/png");
-
+    // PNG(DataURL)を表示
+    const img = document.getElementById("image");
+    img.src = canvas.toDataURL("image/png");
 }
