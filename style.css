@@ -1,0 +1,86 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:#888;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    height:100vh;
+
+    font-family:
+        "Segoe UI",
+        "Yu Gothic UI",
+        sans-serif;
+
+}
+
+#card{
+
+    width:400px;
+    height:300px;
+
+    background:white;
+
+    display:flex;
+
+}
+
+.left{
+
+    width:150px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-right:2px solid #ddd;
+
+}
+
+.left img{
+
+    width:120px;
+    height:120px;
+
+    image-rendering:pixelated;
+
+}
+
+.right{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    padding-left:20px;
+
+    gap:36px;
+
+}
+
+.date{
+
+    font-size:38px;
+
+    font-weight:600;
+
+    line-height:1.2;
+
+    color:#111;
+
+}
