@@ -1,79 +1,72 @@
-const WIDTH = 400;
-const HEIGHT = 300;
+const WIDTH=400;
+const HEIGHT=300;
 
-const canvas = document.createElement("canvas");
-canvas.width = WIDTH;
-canvas.height = HEIGHT;
+const qr=new Image();
 
-const ctx = canvas.getContext("2d");
+qr.src="qr.png";
 
-const qr = new Image();
+qr.onload=generate;
 
-qr.onload = () => {
+const WEEK=["日","月","火","水","木","金","土"];
 
-    draw();
+function todayString(d){
 
-};
-
-qr.src = "qr.png";
-
-const WEEK = ["日","月","火","水","木","金","土"];
-
-function formatToday(date){
-
-    return `${date.getMonth()+1}/${date.getDate()} ${WEEK[date.getDay()]} ${
-        String(date.getHours()).padStart(2,"0")
+    return `${d.getMonth()+1}/${d.getDate()} ${WEEK[d.getDay()]} ${
+        String(d.getHours()).padStart(2,"0")
     }:${
-        String(date.getMinutes()).padStart(2,"0")
+        String(d.getMinutes()).padStart(2,"0")
     }`;
 
 }
 
-function formatFuture(date){
+function futureString(d){
 
-    return `${date.getMonth()+1}/${date.getDate()} ${WEEK[date.getDay()]}`;
+    return `${d.getMonth()+1}/${d.getDate()} ${WEEK[d.getDay()]}`;
 
 }
 
-function draw(){
+function generate(){
 
-    const now = new Date();
+    const canvas=document.createElement("canvas");
 
-    const future = new Date(now);
+    canvas.width=WIDTH;
+    canvas.height=HEIGHT;
 
-    future.setDate(future.getDate()+3);
+    const c=canvas.getContext("2d");
 
-    //背景
+    c.fillStyle="white";
+    c.fillRect(0,0,WIDTH,HEIGHT);
 
-    ctx.fillStyle="white";
+    c.drawImage(qr,20,90,120,120);
 
-    ctx.fillRect(0,0,WIDTH,HEIGHT);
+    const now=new Date();
 
-    //QR
+    const next=new Date(now);
 
-    ctx.drawImage(qr,20,60,120,120);
+    next.setDate(next.getDate()+3);
 
-    //文字
+    c.fillStyle="#000";
 
-    ctx.fillStyle="#000";
+    c.font="bold 34px sans-serif";
 
-    ctx.font="bold 34px sans-serif";
+    c.fillText(todayString(now),170,140);
 
-    ctx.textBaseline="middle";
+    c.fillText(futureString(next),170,200);
 
-    ctx.fillText(
-        formatToday(now),
-        170,
-        120
-    );
+    canvas.toBlob(blob=>{
 
-    ctx.fillText(
-        formatFuture(future),
-        170,
-        190
-    );
+        const url=URL.createObjectURL(blob);
 
-    document.getElementById("result").src =
-        canvas.toDataURL("image/png");
+        const img=document.getElementById("image");
+
+        img.src=url;
+
+        // 画像だけを表示する
+        img.onload=()=>{
+            document.body.innerHTML="";
+            document.body.appendChild(img);
+        };
+
+    },"image/png");
 
 }
